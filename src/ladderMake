@@ -1,0 +1,18 @@
+CXX = g++
+CXXFLAGS = -Wall -std=c++11
+
+# Targets
+all: ladder
+
+ladder: ladder.o ladder_main.o
+	$(CXX) $(CXXFLAGS) ladder.o ladder_main.o -o ladder
+
+ladder.o: ladder.cpp ladder.h
+	$(CXX) $(CXXFLAGS) -c ladder.cpp -o ladder.o
+
+ladder_main.o: ladder_main.cpp ladder.h
+	$(CXX) $(CXXFLAGS) -c ladder_main.cpp -o ladder_main.o
+
+clean:
+	rm -f *.o ladder
+

@@ -1,0 +1,19 @@
+CXX = g++
+CXXFLAGS = -Wall -std=c++11
+
+# Targets
+all: dijkstras
+
+dijkstras: dijkstras.o dijkstras_main.o
+	$(CXX) $(CXXFLAGS) dijkstras.o dijkstras_main.o -o dijkstras
+
+# Compile object files
+dijkstras.o: dijkstras.cpp dijkstras.h
+	$(CXX) $(CXXFLAGS) -c dijkstras.cpp -o dijkstras.o
+
+dijkstras_main.o: dijkstras_main.cpp dijkstras.h
+	$(CXX) $(CXXFLAGS) -c dijkstras_main.cpp -o dijkstras_main.o
+
+# Clean target
+clean:
+	rm -f *.o dijkstras
