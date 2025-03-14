@@ -50,6 +50,17 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     if(begin_word == end_word){
         return {};
     }
+
+    if (word_list.empty()) {
+    cerr << "Error: Dictionary is empty!" << endl;
+    return {};
+    }
+
+    if (word_list.find(end_word) == word_list.end()) {
+        cerr << "Error: End word not in dictionary!" << endl;
+        return {};
+    }
+
     
     while (!ladder_queue.empty()) {
         int level_size = ladder_queue.size();
@@ -81,6 +92,11 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
 
 void load_words(set<string>& word_list, const string& file_name) {
     ifstream file(file_name);
+    if (!file) {
+        cerr << "Error: Unable to open file " << file_name << endl;
+        return;
+    }
+
     string word;
     while (file >> word) {
         word_list.insert(word);
