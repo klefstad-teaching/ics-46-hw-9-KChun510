@@ -7,16 +7,16 @@ void error(string word1, string word2, string msg) {
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
     int len1 = str1.size(), len2 = str2.size();
     
-    if (abs(len1 - len2) > d) return false;  // More than `d` edits needed
+    if (abs(len1 - len2) > d) return false;  // If the length difference is more than d, return false
 
     int i = 0, j = 0, count = 0;
 
     while (i < len1 && j < len2) {
         if (str1[i] != str2[j]) {
             count++;
-            if (count > d) return false;  // Stop early if exceeded
+            if (count > d) return false;  // More than `d` differences found
 
-            // Handle insertion, deletion, or substitution
+            // Handle insertions, deletions, or substitutions
             if (len1 > len2) i++;    // Deletion in str1
             else if (len1 < len2) j++; // Insertion in str1
             else { i++; j++; }        // Substitution
@@ -25,12 +25,11 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
         }
     }
 
-    // Count remaining characters at the end (if any)
+    // If one word is longer, count the remaining characters
     count += abs(len1 - len2);
 
     return count <= d;
 }
-
 
 bool is_adjacent(const string& word1, const string& word2) {
     int len1 = word1.size(), len2 = word2.size();
