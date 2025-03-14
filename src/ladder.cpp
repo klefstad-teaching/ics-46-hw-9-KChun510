@@ -6,13 +6,15 @@ void error(string word1, string word2, string msg) {
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
     int len1 = str1.size(), len2 = str2.size();
-    if (abs(len1 - len2) > d) return false;  // Ensure difference isn't too large
+    
+    if (abs(len1 - len2) > d) return false;  // More than `d` edits needed
 
     int i = 0, j = 0, count = 0;
-    
+
     while (i < len1 && j < len2) {
         if (str1[i] != str2[j]) {
-            if (++count > d) return false;  // More than `d` differences
+            count++;
+            if (count > d) return false;  // Stop early if exceeded
 
             // Handle insertion, deletion, or substitution
             if (len1 > len2) i++;    // Deletion in str1
@@ -23,11 +25,12 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
         }
     }
 
-    // Account for trailing characters
+    // Count remaining characters at the end (if any)
     count += abs(len1 - len2);
 
     return count <= d;
 }
+
 
 bool is_adjacent(const string& word1, const string& word2) {
     int len1 = word1.size(), len2 = word2.size();
@@ -114,7 +117,7 @@ void load_words(set<string>& word_list, const string& file_name) {
 
 void print_word_ladder(const vector<string>& ladder) {
     if (ladder.empty()) {
-        cout << "No word ladder found. " << endl;
+        cout << "No word ladder found." << endl;
         return;
     }
     cout << "Word ladder found: ";
